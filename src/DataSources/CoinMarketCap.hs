@@ -10,11 +10,9 @@ module DataSources.CoinMarketCap
     ( parse
     ) where
 
-data Snapshot = 
-  Snapshot { time:: Float
-           , usd:: Float
-           } deriving Show
+import Types
 
+import Data.ByteString
 
-parse :: IO () 
-parse = putStrLn "ParseFunctionCalled"
+parse :: ByteString -> [Snapshot]  
+parse = Data.ByteString.putStrLn "ParseFunctionCalled"
