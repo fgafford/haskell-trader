@@ -1,3 +1,4 @@
+{-# LANGUAGE LambdaCase #-}
 {-- CoinMarketCap DataSource
 
 Example URL (visual): 
@@ -12,7 +13,22 @@ module DataSources.CoinMarketCap
 
 import Types
 
-import Data.ByteString
+import Data.Aeson
+import Data.Text
+import qualified Data.ByteString.Lazy.Internal as B
 
-parse :: ByteString -> [Snapshot]  
-parse = Data.ByteString.putStrLn "ParseFunctionCalled"
+parse :: B.ByteString -> Maybe Snapshots 
+parse = decode
+
+instance FromJSON Snapshot where
+    parseJSON json = do
+        [time, usd] <- parseJSON json
+        return Snapshot { time=time 
+                        , usd=usd
+                        , sign="ETC"
+                        }
+
+instance FromJSON Snapshots where
+    parseJSON = \case
+        Object o -> (o .: pack "price_usd") >>= fmap Snapshots . parseJSON
+        x -> fail $ "unexpected json: " ++ show x
