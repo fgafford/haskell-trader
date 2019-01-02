@@ -1,8 +1,16 @@
 module Types where
-    
-data Snapshots = Snapshots [Snapshot] deriving Show
+
+data TimeUSD = TimeUSD { tm:: Double
+                       , us:: Double
+                       } deriving Show
+
 data Snapshot = 
-    Snapshot { time:: Float
-             , usd:: Float
+    Snapshot { time:: Double
+             , usd:: Double
              , sign:: String
              } deriving Show
+
+data Snapshots = Snapshots [TimeUSD] deriving Show
+
+asSnapshot :: String -> TimeUSD -> Snapshot
+asSnapshot sym t = Snapshot (tm t) (us t) sym
