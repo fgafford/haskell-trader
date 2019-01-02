@@ -12,7 +12,7 @@ module DataSources.CoinMarketCap
     , parseAs
     ) where
 
-import Types
+import Snapshot
 
 import Data.Aeson
 import qualified Data.Text as T
@@ -20,10 +20,10 @@ import qualified Data.ByteString.Lazy.Internal as B
 
 parseAs :: String -> B.ByteString -> [Snapshot]
 parseAs sym bs = case parse bs of 
-                    Just (Snapshots shots) -> asSnapshot sym <$> shots
+                    Just (Prices times) -> asSnapshot sym <$> times
                     Nothing -> []
 
-parse :: B.ByteString -> Maybe Snapshots 
+parse :: B.ByteString -> Maybe Prices 
 parse = decode
 
 instance FromJSON TimeUSD where
@@ -31,7 +31,7 @@ instance FromJSON TimeUSD where
         [time, usd] <- parseJSON json
         return $ TimeUSD time usd
 
-instance FromJSON Snapshots where
+instance FromJSON Prices where
     parseJSON = \case
-        Object o -> (o .: T.pack "price_usd") >>= fmap Snapshots . parseJSON
+        Object o -> (o .: T.pack "price_usd") >>= fmap Prices . parseJSON
         x -> fail $ "unexpected json: " ++ show x
