@@ -20,21 +20,16 @@ import qualified Data.ByteString.Lazy.Internal as B
 
 parseAs :: String -> B.ByteString -> [Snapshot]
 parseAs sym bs = case parse bs of 
-                    Just (Snapshots shots) -> fmap (\shot -> Snapshot (tm shot) (us shot) sym) shots
+                    Just (Snapshots shots) -> asSnapshot sym <$> shots
                     Nothing -> []
 
 parse :: B.ByteString -> Maybe Snapshots 
 parse = decode
 
-
 instance FromJSON TimeUSD where
     parseJSON json = do
         [time, usd] <- parseJSON json
         return $ TimeUSD time usd
-        -- return Snapshot { time=time 
-        --                 , usd=usd
-        --                 , sign="ETC"
-        --                 }
 
 instance FromJSON Snapshots where
     parseJSON = \case
