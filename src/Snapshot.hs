@@ -1,4 +1,12 @@
 {-# LANGUAGE DuplicateRecordFields #-}
+{- |
+Module          : Snapshot
+Description     : Records of Stock/FOREX price at given time
+
+Author          : Forest Gafford
+
+Basic types for dealing with stock/FOREX prices at a given date.
+-}
 module Snapshot where
 
 data TimeUSD = 
@@ -19,6 +27,8 @@ data Prices =
 asSnapshot :: String -> TimeUSD -> Snapshot
 asSnapshot sym t = Snapshot (getTime t) (getUSD t) sym
 
+
+{- Duplicate field name boilerplate -}
 getTime :: TimeUSD -> Double
 getTime t = time (t :: TimeUSD)
 

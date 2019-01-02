@@ -1,12 +1,18 @@
 {-# LANGUAGE LambdaCase #-}
-{-- CoinMarketCap DataSource
+{- | 
+Module          : CoinMarketCap
+Description     : Interace for interacting with data pulled from  "https://coinmarketcap.com"
+
+Author          : Forest Gafford
+
+Module that allows parsing of raw API calls and stored JSON from coinmarketcap.com
 
 Example URL (visual): 
 https://coinmarketcap.com/currencies/ethereum-classic/#charts
 
 Example API request: 
 https://graphs2.coinmarketcap.com/currencies/ethereum-classic/1543614245000/1546292645000/
---}
+-}
 module DataSources.CoinMarketCap 
     ( parse
     , parseAs
