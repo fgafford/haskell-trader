@@ -1,4 +1,4 @@
-module TestUtils where
+module JsonUtils where
 
 -- import from data.Aeson 
 

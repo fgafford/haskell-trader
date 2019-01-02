@@ -1,4 +1,4 @@
-import TestUtils
+import JsonUtils
 
 import DataSources.CoinMarketCap
 
